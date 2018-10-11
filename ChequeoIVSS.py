@@ -23,7 +23,7 @@ def descuento(anos_insalubres):
     
 # funcion principal que recibe como parametro edad, genero, semanas cotizadas y anos que trabajo en condiciones insalubres
 def chequeo_IVSS(fecha, genero, semanas, anos_insalubres):
-    fecha =  fechatime.strptime(fecha, "%d %m %Y")
+    fecha =  datetime.strptime(fecha, "%d %m %Y")
     age = calculador_de_edad(fecha)
     semanas = int(semanas)
     anos_insalubres = int(anos_insalubres)
