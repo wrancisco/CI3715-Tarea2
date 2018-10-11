@@ -5,6 +5,7 @@
 import unittest
 from ChequeoIVSS import *
 
+
 class FunctionTester(unittest.TestCase):
 
     # Prueba inicial con la que se espera el programa arroje una respuesta positiva.
@@ -12,6 +13,17 @@ class FunctionTester(unittest.TestCase):
         # Se ingresa un hombre con 75 años, 840 semas cotizadas y ningun trabajo insalubre
         self.assertTrue(chequeo_IVSS("03 07 1943", 'M', 840, 0), "Deberia Estar habilitado")
         
+     # separamos las que deberian dar respuesta negativa de las que deberian dar respuestas positivas
+    
+    # Respuestas negativas
+    
+    # Fronteras
+    
+    # 59 anos
+    def testAgeNegativeMan(self):
+        self.assertFalse(chequeo_IVSS("06 07 1959", 'M', 760, 0), "No deberia estar habilitado")
+    # 54 anos
+    
     def testAgeNegativeWoman(self):
         self.assertFalse(chequeo_IVSS("06 07 1964", 'F', 760, 0), "No deberia estar habilitado")
     
@@ -45,7 +57,6 @@ class FunctionTester(unittest.TestCase):
         
     def testEveryEdgeNegativeWoman(self):
         self.assertFalse(chequeo_IVSS("06 07 1959", 'F', 749, 3), "No deberia estar habilitado")
-    
         
     # Respuestas positivas
     
@@ -90,4 +101,24 @@ class FunctionTester(unittest.TestCase):
         
     def testEveryEdgeNegativeWoman(self):
         self.assertTrue(chequeo_IVSS("06 07 1964", 'F', 750, 4), "Deberia estar habilitado")
+        
+    # Malicia
+    
+    # negativos
+    
+    # si tiene 6 anos menos de la edad y tiene 30 anos de trabajo insalubre
+    
+    def testBadTimingMan(self):
+        self.assertFalse(chequeo_IVSS("06 07 1964", 'M', 760, 30), "No deberia estar habilitado")
+    
+    def testBadTimingWoman(self):
+        self.assertFalse(chequeo_IVSS("06 07 1969", 'F', 760, 30), "No deberia estar habilitado")
+        
+    # tiene 5 anos menos de la edad pero si tiene las horas de trabajo insalubre
+    
+    def testGoodTimingMan(self):
+        self.assertTrue(chequeo_IVSS("06 07 1963", 'M', 760, 30), "No deberia estar habilitado")
+    
+    def testGoodTimingWoman(self):
+        self.assertTrue(chequeo_IVSS("06 07 1968", 'F', 760, 30), "No deberia estar habilitado")
         
